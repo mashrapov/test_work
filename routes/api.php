@@ -14,6 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+
+Route::post('register', 'RegisterController@register');
+Route::get('/products', 'ProductController@index');
+Route::get('/tags', 'TagController@index');
+Route::get('/categories', 'CategoryController@index');
+Route::get('/products/{id}', 'ProductController@show');
+
+Route::middleware('auth:api')->group( function () {
+    Route::resource('/products', 'ProductController')->only([
+        'store', 'update', 'destroy'
+    ]);
 });
